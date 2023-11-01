@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <script>
+
+      async function startSSE() {
+        const source = new EventSource("http://localhost:3000/sse");
+        source.onopen = () => console.log("Connected");
+        source.onerror = console.error;
+        source.onmessage = console.log;
+      }
+
+      startSSE();
+    </script>
+  </head>
+  <body>
+    <h1>Server Send Events 示例</h1>
+  </body>
+</html>

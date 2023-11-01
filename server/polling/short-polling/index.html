@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <script>
+      async function getData() {
+        const res = await fetch("http://localhost:3033/short-polling");
+        return res.json();
+      }
+
+      function polling() {
+        const timer = setInterval(async () => {
+          const result = await getData();
+          console.log(result.status);
+          if (result.status === "high") {
+            clearInterval(timer);
+          }
+        }, 2000);
+      }
+
+      polling();
+    </script>
+  </head>
+  <body>
+    <h1>短轮询（Short Polling）示例</h1>
+  </body>
+</html>

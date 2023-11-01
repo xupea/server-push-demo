@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <script>
+      async function getData() {
+        const res = await fetch("http://localhost:3034/long-polling");
+        return res.json();
+      }
+
+      async function polling() {
+        const result = await getData();
+        console.log(result.status);
+        if (result.status === "high") {
+          return;
+        } else {
+          await polling();
+        }
+      }
+
+      polling();
+    </script>
+  </head>
+  <body>
+    <h1>长轮询（Long Polling）示例</h1>
+  </body>
+</html>
