@@ -9,7 +9,10 @@
       async function polling() {
         const result = await getData();
         console.log(result.status);
-        if (result.status === "high") {
+        if (
+          result.status === "scanned-confirmed" ||
+          result.status === "scanned-cancel"
+        ) {
           return;
         } else {
           await polling();

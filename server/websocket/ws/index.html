@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <script>
+      function websocket() {
+        // Create WebSocket connection.
+        const socket = new WebSocket("ws://localhost:8080");
+
+        // Connection opened
+        socket.addEventListener("open", function (event) {
+          // socket.send("Hello Server!");
+          console.log('connect to wss server');
+        });
+
+        // Listen for messages
+        socket.addEventListener("message", function (event) {
+          console.log("Message from server ", event.data);
+        });
+      }
+
+      websocket();
+    </script>
+  </head>
+  <body>
+    <h1>WebSocket 示例</h1>
+  </body>
+</html>

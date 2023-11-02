@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "polling": "node ./server/polling/short-polling/index.js",
+    "long-polling": "node ./server/polling/long-polling/index.js",
+    "sse": "node ./server/sse/sse-koa/index.js",
+    "ws": "node ./server/websocket/ws/index.js"
   },
   "keywords": [],
   "author": "",

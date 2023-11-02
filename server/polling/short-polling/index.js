@@ -1,7 +1,7 @@
 const Koa = require("koa");
 const path = require("path");
 const { createReadStream } = require("fs");
-const { readDatabase } = require("../../utils");
+const { readDatabase } = require("../../../utils");
 
 const port = 3033;
 

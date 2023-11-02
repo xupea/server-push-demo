@@ -9,8 +9,8 @@
       function polling() {
         const timer = setInterval(async () => {
           const result = await getData();
-          console.log(result.status);
-          if (result.status === "high") {
+          console.log(result);
+          if (result.status === "scanned-confirmed") {
             clearInterval(timer);
           }
         }, 2000);

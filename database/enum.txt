@@ -1,0 +1,11 @@
+未扫描 unscanned
+
+已扫描，等待用户确认 scanned-unconfirmed
+
+已扫描，用户同意授权 scanned-confirmed
+
+已扫描，用户取消授权 scanned-cancel
+
+已过期 expired 
+
+

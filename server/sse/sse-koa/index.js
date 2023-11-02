@@ -2,9 +2,12 @@ const Koa = require("koa");
 const { PassThrough } = require("stream");
 const { createReadStream } = require("fs");
 const path = require("path");
-const { readDatabase } = require("../../utils");
+const { readDatabase } = require("../../../utils");
 
 const port = 3000;
+
+let lastStatus = "unscanned";
+let msgId = 0;
 
 new Koa()
   .use(async (ctx, next) => {
@@ -27,10 +30,31 @@ new Koa()
     ctx.status = 200;
     ctx.body = stream;
 
-    const timer = setInterval(() => {
-      console.log("send data to client");
-      stream.write(`retry: 10000\nid: msg1\ndata: ${new Date()}\n\n`);
-    }, 2000);
+    const res = await readDatabase();
+
+    lastStatus = res.status;
+
+    stream.write(
+      `retry: 10000\nid: msg${msgId++}\ndata: ${JSON.stringify(res)}\n\n`
+    );
+
+    const timer = setInterval(async () => {
+      const res = await readDatabase();
+      if (res.status !== lastStatus) {
+        lastStatus = res.status;
+
+        stream.write(
+          `retry: 10000\nid: msg${msgId++}\ndata: ${JSON.stringify(res)}\n\n`
+        );
+
+        if (
+          res.status === "scanned-confirmed" ||
+          res.status === "scanned-cancel"
+        ) {
+          clearInterval(timer);
+        }
+      }
+    }, 1000);
 
     stream.on("close", () => {
       console.log("stream is close");

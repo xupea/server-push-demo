@@ -1,9 +1,11 @@
 const Koa = require("koa");
 const path = require("path");
 const { createReadStream } = require("fs");
-const { readDatabase } = require("../../utils");
+const { readDatabase } = require("../../../utils");
 
 const port = 3034;
+
+let lastStatus = 'unscanned';
 
 new Koa()
   .use(async (ctx, next) => {
@@ -20,7 +22,7 @@ new Koa()
     const getStatusPromise = new Promise((resolve) => {
       const timer = setInterval(async () => {
         const res = await readDatabase();
-        if (res.status !== "low") {
+        if (res.status !== lastStatus) {
           clearInterval(timer);
           resolve(res);
         }
@@ -29,8 +31,10 @@ new Koa()
 
     const res = await Promise.race([timeoutPromise, getStatusPromise]);
 
+    lastStatus = res.status;
+
     ctx.status = 200;
-    console.log(res);
+
     ctx.body = res;
   })
   .use((ctx) => {
