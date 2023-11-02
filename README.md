@@ -1,3 +1,22 @@
+### How to ?
+
+```
+npm i
+```
+
+```
+npm run polling
+or
+npm run long-polling
+or
+npm run sse
+or
+npm run ws
+```
+
+### QR
+
+
 二维码的状态：
 
 - 未扫描 unscanned
